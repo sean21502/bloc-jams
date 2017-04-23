@@ -69,12 +69,32 @@ var setCurrentAlbum = function(album) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
  };
+/*assignment 13- Re-write the function so that it:
+Checks to see if a parent exists. If it doesn't, then console.log a string that says "No parent found".
+Shows a different string in console.log when it fails to find a parent with the given class name: "No parent found with that class name". 
+
+var findParentByClassName = function(element, targetClass) {
+	if (element) {
+        var currentParent = element.parentElement;
+        while (currentParent.className !== targetClass && currentParent.className !== null) {
+		    console.log("No parent found")
+            currentParent = currentParent.parentElement; 
+        }
+    return currentParent;
+	
+    } else {
+	    console.log("No parent found with that class name")
+	}
+};
+
+
+*/
 
 var findParentByClassName = function(element, targetClass) {
     if (element) {
         var currentParent = element.parentElement;
         while (currentParent.className !== targetClass && currentParent.className !== null) {
-            currentParent = currentParent.parentElement;
+            currentParent = currentParent.parentElement; 
         }
     return currentParent;
     }
@@ -115,7 +135,7 @@ var clickHandler = function(targetElement) {
          currentlyPlayingSongElement.innerHTML = currentlyPlayingSongElement.getAttribute('data-song-number');
          songItem.innerHTML = pauseButtonTemplate;
          currentlyPlayingSong = songItem.getAttribute('data-song-number');
-     }
+    }
 };
 
 var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
