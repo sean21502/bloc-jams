@@ -1,4 +1,4 @@
- var albumPicasso = {
+var albumPicasso = {
      title: 'The Colors',
      artist: 'Pablo Picasso',
      label: 'Cubism',
@@ -12,7 +12,7 @@
          { title: 'Magenta', duration: '2:15'}
      ]
  };
- var albumMarconi = {
+var albumMarconi = {
      title: 'The Telephone',
      artist: 'Guglielmo Marconi',
      label: 'EM',
@@ -26,7 +26,7 @@
          { title: 'Wrong phone number', duration: '2:15'}
      ]
  };
- var albumImagineDragons = {
+var albumImagineDragons = {
      title: 'Night Visions',
      artist: 'Imagine Dragons',
      label: 'Interscope',
@@ -67,6 +67,21 @@ var setCurrentAlbum = function(album) {
 
      for (var i = 0; i < album.songs.length; i++) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+     }
+	
+	 for (var i = 0; i < songRows.length; i++) {
+         songRows[i].addEventListener('mouseleave', function(event) {
+		 
+         var songItem = getSongItem(event.target);
+         var songItemNumber = songItem.getAttribute('data-song-number');
+ 
+         if (songItemNumber !== currentlyPlayingSong) {
+             songItem.innerHTML = songItemNumber;
+             }
+         });
+		 songRows[i].addEventListener('click', function(event) {
+         clickHandler(event.target);
+		 });
      }
  };
 
@@ -126,41 +141,27 @@ var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause">
 var currentlyPlayingSong = null;
  
 window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+     
+	setCurrentAlbum(albumPicasso);
 	 
 	 songListContainer.addEventListener('mouseover', function(event) {
          if (event.target.parentElement.className === 'album-view-song-item') {
 			 event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
              var songItem = getSongItem(event.target);
 
-           if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
+         if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
 			   songItem.innerHTML = playButtonTemplate;
 		   }
 		 }
      });
-	 
-	 for (var i = 0; i < songRows.length; i++) {
-         songRows[i].addEventListener('mouseleave', function(event) {
-		 
-         var songItem = getSongItem(event.target);
-         var songItemNumber = songItem.getAttribute('data-song-number');
- 
-         if (songItemNumber !== currentlyPlayingSong) {
-             songItem.innerHTML = songItemNumber;
-             }
-         });
-		 songRows[i].addEventListener('click', function(event) {
-         clickHandler(event.target);
-		 });
-     }
 	 
 	 var albums = [albumPicasso, albumMarconi, albumImagineDragons];
 	 var i = 1;
 	 albumImage.addEventListener("click", function(event) {
 		 setCurrentAlbum(albums[i]);
 		 i++;
-		 if (i == albums.length) {
-			 i == 0;
+		 if (i === albums.length) {
+			 i = 0;
 		 }					 						 
 	});
  };
