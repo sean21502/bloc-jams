@@ -134,7 +134,7 @@ $(document).ready(function() {
 	 
 	 var albums = [albumPicasso, albumMarconi, albumImagineDragons];
 	 var i = 1;
-	 albumImage.addEventListener("click", function(event) {
+	 $('.album-cover-art').click(function(event) {
 		 setCurrentAlbum(albums[i]);
 		 i++;
 		 if (i === albums.length) {
