@@ -8,7 +8,7 @@ var setSong = function(songNumber) {
 	currentSoundFile = new buzz.sound(currentSongFromAlbum.audioUrl, {
          formats: [ 'mp3' ],
          preload: true
-     });
+    });
 	setVolume(currentVolume);
 };
 
@@ -23,7 +23,7 @@ var getSongNumberCell = function(number){
 }
 
 var createSongRow = function(songNumber, songName, songLength) {
-     var template =
+    var template =
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
@@ -58,27 +58,27 @@ var createSongRow = function(songNumber, songName, songLength) {
 		}
     };
     
-	var onHover = function(event) {
-        var songNumberCell = $(this).find('.song-item-number');
-        var songNumber = parseInt($(this).attr('data-song-number'));
+var onHover = function(event) {
+	var songNumberCell = $(this).find('.song-item-number');
+    var songNumber = parseInt($(this).attr('data-song-number'));
 
-        if (songNumber !== currentlyPlayingSongNumber) {
-			songNumberCell.html(playButtonTemplate);
-        }
-    };
+    if (songNumber !== currentlyPlayingSongNumber) {
+	    songNumberCell.html(playButtonTemplate);
+    }
+};
 
-    var offHover = function(event) {
-        var songNumberCell = $(this).find('.song-item-number');
-        var songNumber = parseInt($(this).attr('data-song-number'));
+var offHover = function(event) {
+     var songNumberCell = $(this).find('.song-item-number');
+     var songNumber = parseInt($(this).attr('data-song-number'));
 
-        if (songNumber !== currentlyPlayingSongNumber) {
-            songNumberCell.html(songNumber);
-			console.log("songNumber type is " + typeof songNumber + "\n and currentlyPlayingSongNumber type is " + typeof currentlyPlayingSongNumber);
-        }
-    };
+     if (songNumber !== currentlyPlayingSongNumber) {
+         songNumberCell.html(songNumber);
+	     console.log("songNumber type is " + typeof songNumber + "\n and currentlyPlayingSongNumber type is " + typeof currentlyPlayingSongNumber);
+     }
+};
 
-	$row.find('.song-item-number').click(clickHandler);
-    $row.hover(onHover, offHover);
+$row.find('.song-item-number').click(clickHandler);
+$row.hover(onHover, offHover);
     
     return $row;
 };
@@ -175,8 +175,23 @@ var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 
 $(document).ready(function() {
+	var mainControl = $('.main-controls .play-pause').click(togglePlayFromPlayerBar());
+    function togglePlayFromPlayerBar() {
+		if (playButtonTemplate.click){
+			currentSoundFile.play();
+            $(this).html(pauseButtonTemplate);
+            currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+            updatePlayerBarSong();
+		
+		}else if (pauseButtonTemplate.click) {
+			$(this).html(pauseButtonTemplate);
+             currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+             updatePlayerBarSong();
+		}
+		
+	}
 	
-    setCurrentAlbum(albumPicasso);
+	setCurrentAlbum(albumPicasso);
 	$previousButton.click(previousSong);
     $nextButton.click(nextSong);
      
